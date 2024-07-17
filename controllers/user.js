@@ -7,8 +7,7 @@ import { fileURLToPath } from "url";
 import { dirname, join, resolve } from "path";
 import multer from "multer";
 import { renameSync } from "fs";
-
-
+import cloudinary from "../utils/cloudinary.js";
 
 export const register = async (req, res, next) => {
   try {
@@ -89,69 +88,4 @@ export const logout = async (req, res, next) => {
   } catch (error) {
     next(error);
   }
-};
-
-export const uploadByLink = async (req, res, next) => {
-  const { link } = req.body;
-
-  const newName = "photo" + Date.now() + ".jpg";
-  const currentFilePath = fileURLToPath(import.meta.url);
-  const currentDir = dirname(dirname(currentFilePath));
-  const destPath = resolve(currentDir, "uploads", newName);
-  console.log(link);
-  // const parentDir=dirname(dirname(dirname(destPath)));
-
-  // console.log(parentDir);
-  // console.log(currentDir);
-
-  const options = {
-    url: link,
-    dest: destPath,
-  };
-
-  try {
-    const { filename, image } = await imageDownloader.image(options);
-    console.log(filename); // => /path/to/dest/image.jpg
-    return res.json({
-      success: true,
-      dest: newName,
-    });
-  } catch (error) {
-    next(error);
-  }
-};
-
-export const upload =  (req, res, next) => {
- console.log(req.files);
-
-  try{
-  const uploadedFiles=[];
-
-  for(let i=0;i<req.files.length;i++){
-
-    const{path,originalname}=req.files[i];
-
-    const parts=originalname.split('.');
-
-    const ext=parts[parts.length-1];
-    const newPath = join("uploads", `${Date.now()}_${i}.${ext}`);
-
-    renameSync(path,newPath);
-
-    uploadedFiles.push(newPath.replace('uploads\\',''));
-
-  }
-
-  console.log(uploadedFiles);
-
-  return res.json({
-    success: true,
-    files: uploadedFiles,
-  });
-
-  }catch(error){
-
-    next(error);
-  }
-  
 };
