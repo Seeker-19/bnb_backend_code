@@ -2,12 +2,6 @@ import { User } from "../models/user.js";
 import bcrypt from "bcrypt";
 import { sendCookie } from "../utils/feature.js";
 import ErrorHandler from "../middlewares/errorMiddleware.js";
-import imageDownloader from "image-downloader";
-import { fileURLToPath } from "url";
-import { dirname, join, resolve } from "path";
-import multer from "multer";
-import { renameSync } from "fs";
-import cloudinary from "../utils/cloudinary.js";
 
 export const register = async (req, res, next) => {
   try {
