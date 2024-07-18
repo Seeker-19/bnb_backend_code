@@ -73,7 +73,10 @@ export const logout = async (req, res, next) => {
     res
       .status(201)
       .cookie("token", "", {
-        expires: new Date(Date.now()),
+        httpOnly: true,
+        sameSite: "none",
+        secure: process.env.NODE_ENV === "production",
+        expires: new Date(0), // Immediately expire the cookie
       })
       .json({
         success: true,
