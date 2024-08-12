@@ -146,12 +146,14 @@ export const paymentVerification = async (req, res, next) => {
   hmac.update(orderId + "|" + paymentId);
   const generatedSignature = hmac.digest("hex");
 
-  console.log(generatedSignature, signature);
+  console.log("generated", generatedSignature, signature);
 
   if (generatedSignature === signature) {
     const booked = await paymentModel.find({ booking: booking_id });
 
-    if (!booked) {
+    console.log("book", booked);
+
+    if (!booked || booked.length === 0) {
       const payment = await paymentModel.create({
         user: req.user,
         place: place_id,
@@ -160,6 +162,8 @@ export const paymentVerification = async (req, res, next) => {
         razorpay_payment_id: paymentId,
         razorpay_signature: signature,
       });
+
+      console.log("pay", payment);
     }
 
     const booking = await bookingModel.findOneAndUpdate(
