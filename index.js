@@ -60,7 +60,6 @@ app.get("/api/gettoken", async (req, res, next) => {
 
     return res.status(200).json({
       success: true,
-      token,
     });
 
     // const decoded = jwt.verify(token,process.env.JWT_SECRET);
