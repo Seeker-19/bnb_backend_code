@@ -23,7 +23,7 @@ app.use(cookieParser());
 
 app.use(
   cors({
-    origin: "https://client-mauve-mu.vercel.app",
+    origin: "https://bnb-frontend-code.vercel.app",
     methods: ["GET", "POST", "PUT", "DELETE"],
     credentials: true,
   })
