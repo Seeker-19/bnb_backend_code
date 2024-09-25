@@ -4,6 +4,7 @@ const bookingSchema = new mongoose.Schema({
   user: {
     type: mongoose.Schema.Types.ObjectId,
     required: true,
+    ref: "bnbUser",
   },
   place: {
     type: mongoose.Schema.Types.ObjectId,
@@ -34,6 +35,7 @@ const paymentSchema = new mongoose.Schema({
   user: {
     type: mongoose.Schema.Types.ObjectId,
     required: true,
+    ref: "bnbUser",
   },
   place: {
     type: mongoose.Schema.Types.ObjectId,
