@@ -129,7 +129,10 @@ export const getallPlaces = async (req, res, next) => {
     if (query) {
       // Use regex to make a case-insensitive search
       places = await PlaceModel.find({
-        title: { $regex: query, $options: "i" },
+        $or: [
+          { title: { $regex: query, $options: "i" } },
+          { address: { $regex: query, $options: "i" } },
+        ],
       });
     } else {
       places = await PlaceModel.find();
