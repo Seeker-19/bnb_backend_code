@@ -17,7 +17,7 @@ export const bookingUser = async (req, res, next) => {
       email,
     } = req.body;
 
-    console.log(email);
+    console.log("email", email, numberOfGuests);
 
     const restplace = await bookingModel.create({
       user: req.user,
