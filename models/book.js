@@ -16,6 +16,8 @@ const bookingSchema = new mongoose.Schema({
 
   checkOut: { type: Date, required: true },
 
+  numberOfGuests: { type: Number, required: true },
+
   name: { type: String, required: true },
 
   phone: { type: String, required: true },
