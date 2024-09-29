@@ -1,6 +1,7 @@
 import ErrorHandler from "../middlewares/errorMiddleware.js";
 import { PlaceModel } from "../models/place.js";
 import { bookingModel } from "../models/book.js";
+
 export const newPlace = async (req, res, next) => {
   try {
     const {
@@ -15,6 +16,15 @@ export const newPlace = async (req, res, next) => {
       maxGuests,
       price,
     } = req.body;
+
+    const existingPlace = await PlaceModel.findOne({ address });
+
+    if (existingPlace) {
+      return res.status(400).json({
+        success: false,
+        message: "A place with this address already exists.",
+      });
+    }
 
     await PlaceModel.create({
       owner: req.user,
